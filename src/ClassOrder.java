@@ -1,5 +1,9 @@
 //Max Riley Class Order
 
+//Needs import statements!!
+//Oops
+//Btw this is untested
+
 class Order implements Orders{
 	
 	//instance variables for order ID, Address, Locations, and a hashmap that will use Item ID's as keys
