@@ -47,7 +47,7 @@ class Order {
 //And also lets you remove completed orders and add new orders
 class OrderingSystem implements OrderingSystemInterface{
 	
-	//Instance variable is a queue. Now thinking about it, may just want a regular list or something
+	//Instance variable is a map, the Key being orderIDs
 	public Map<Integer, Order> OngoingOrders;
 	
 	public void OrderingSystem(){
@@ -55,7 +55,7 @@ class OrderingSystem implements OrderingSystemInterface{
 	}
 
 	@Override
-	//Lets you add order
+	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
 	public Boolean placeOrder(Map<Integer,Integer> newItemList, String newAddress){
 		//Add a thing that checks inventory to see if it can be processed 
 		Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
@@ -65,11 +65,9 @@ class OrderingSystem implements OrderingSystemInterface{
 		return true;
 	}
 	
-	//Pops first item in queue, assuming all orders are first in first out, but should change cus that is unrealistic
+	//removes item by orderID
 	
 	public void finishOrder(Integer OrderID){
-		
-		//could use .remove here
 		this.OngoingOrders.remove(OrderID);
 	}
 
