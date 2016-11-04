@@ -2,26 +2,21 @@ import java.util.*;
 
 //Max Riley Class Order
 
-class Order implements Orders{
+class Order {
 	
 	//instance variables for order ID, Address, Locations, and a hashmap that will use Item ID's as keys
 	//and a list of integers to count the amount they want of a certain object
 	public Integer OrderID;
-	public HashMap<String, Integer> ItemIDList;
+	public Map<Integer, Integer> ItemIDList;
 	public String Address;
 	public String OrderLocation;
 	
 	
-	public void Order(Integer OrderID, HashMap<Integer, Integer> ItemIDList, String Address){
+	public  Order(Integer OrderID, Map<Integer, Integer> ItemIDList, String Address){
 		this.OrderID = OrderID;
 		this.ItemIDList = ItemIDList;
 		this.Address = Address;
 		this.OrderLocation = "Start";
-	}
-	
-	//Not sure what this interface is for...
-	public Boolean placeOrder(List<Integer> items){
-		return true;
 	}
 	
 	//Gets order ID from Order
@@ -48,9 +43,9 @@ class Order implements Orders{
 }
 
 
-//Makes a list of Orders so we have an overview of all Orders currently being worked on,
+//Makes a list of OrderingSystemInterface so we have an overview of all OrderingSystemInterface currently being worked on,
 //And also lets you remove completed orders and add new orders
-class OrderingSystem{
+class OrderingSystem implements OrderingSystemInterface{
 	
 	//Instance variable is a queue. Now thinking about it, may just want a regular list or something
 	public Map<Integer, Order> OngoingOrders;
@@ -58,13 +53,16 @@ class OrderingSystem{
 	public void OrderingSystem(){
 		this.OngoingOrders = new HashMap<>();
 	}
-	
+
+	@Override
 	//Lets you add order
-	public void placeOrder(Map<Integer,Integer> newItemList, String newAddress){
+	public Boolean placeOrder(Map<Integer,Integer> newItemList, String newAddress){
 		//Add a thing that checks inventory to see if it can be processed 
-		Integer uniqueID = UUID.randomUUID();
+		Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
 		Order newOrder = new Order(uniqueID, newItemList, newAddress);
-		this.OrderList.put(uniqueID, newOrder);
+		this.OngoingOrders.put(uniqueID, newOrder);
+
+		return true;
 	}
 	
 	//Pops first item in queue, assuming all orders are first in first out, but should change cus that is unrealistic
@@ -72,6 +70,7 @@ class OrderingSystem{
 	public void finishOrder(Integer OrderID){
 		
 		//could use .remove here
-		this.OrderList.remove(OrderID);
+		this.OngoingOrders.remove(OrderID);
 	}
+
 }

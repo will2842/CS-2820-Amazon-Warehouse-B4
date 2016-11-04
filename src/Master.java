@@ -18,7 +18,7 @@ public class Master implements Observer {
     private Queue<UpcomingOrder> upcomingOrders;
     private Integer time;
 
-    private Orders orderSystem;
+    private OrderingSystemInterface orderSystem;
 
     @Override
     public void update(Observable o, Object arg) {
@@ -34,7 +34,7 @@ public class Master implements Observer {
 
     public Master() {
         upcomingOrders = new LinkedList<>();
-        orderSystem = new MockOrders();
+        orderSystem = new MockOrderingSystem();
 
         loadOrderQueue();
     }
@@ -48,7 +48,7 @@ public class Master implements Observer {
     }
 
     /**
-     * Loads the Simulated Orders from the upcomingOrders CSV file
+     * Loads the Simulated OrderingSystemInterface from the upcomingOrders CSV file
      */
     private void loadOrderQueue() {
 
@@ -102,7 +102,9 @@ public class Master implements Observer {
      */
     private void checkNewOrders() {
         while (upcomingOrders.peek().getTimeToOrder() == time) {
-            orderSystem.placeOrder(upcomingOrders.poll().getItemLists());
+            //TODO: Change to Map with address
+            upcomingOrders.poll();
+            //orderSystem.placeOrder(upcomingOrders.poll().getItemLists());
         }
     }
 
