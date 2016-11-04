@@ -4,6 +4,10 @@
 //Oops
 //Btw this is untested
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Queue;
+
 class Order implements Orders{
 	
 	//instance variables for order ID, Address, Locations, and a hashmap that will use Item ID's as keys
@@ -22,7 +26,7 @@ class Order implements Orders{
 	}
 	
 	//Not sure what this interface is for...
-	Boolean placeOrder(List<Integer> items){
+	public Boolean placeOrder(List<Integer> items){
 		return true;
 	}
 	
@@ -38,7 +42,7 @@ class Order implements Orders{
 	
 	//Gets Locations of Order
 	public String getLocation(){
-		return this.getLocation;
+		return this.OrderLocation;
 	}
 	
 	//Set Location of a certain order
@@ -58,7 +62,7 @@ class MainOrder{
 	public Queue<Order> OrderList;
 	
 	public void MainOrder(Queue<Order> OrderList){
-		this.OrderList = OrderList
+		this.OrderList = OrderList;
 	}
 	
 	//Lets you add order

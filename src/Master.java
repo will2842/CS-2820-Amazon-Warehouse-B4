@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.Queue;
 public class Master implements Observer {
 
     private Queue<UpcomingOrder> upcomingOrders;
-    private static Integer time;
+    private Integer time;
 
     private Orders orderSystem;
 
@@ -27,8 +26,9 @@ public class Master implements Observer {
         if (time == null) {
             time = 0;
         } else {
-            time++;
+            time ++;
         }
+
         checkNewOrders();
     }
 
@@ -37,6 +37,14 @@ public class Master implements Observer {
         orderSystem = new MockOrders();
 
         loadOrderQueue();
+    }
+
+    public Queue<UpcomingOrder> getUpcomingOrders() {
+        return this.upcomingOrders;
+    }
+
+    public Integer getTime() {
+        return this.time;
     }
 
     /**
@@ -87,47 +95,17 @@ public class Master implements Observer {
                 .forEachOrdered(item -> IDs.add(Integer.valueOf(item)));
 
         return new UpcomingOrder(timeToOrder, IDs);
-
     }
 
     /**
      * Checks for new orders when the clock ticks
      */
     private void checkNewOrders() {
-        while (upcomingOrders.peek().getSecondToOrder() == time) {
+        while (upcomingOrders.peek().getTimeToOrder() == time) {
             orderSystem.placeOrder(upcomingOrders.poll().getItemLists());
         }
     }
 
-    /**
-     * Private class used to simulate upcoming orders
-     */
-    private class UpcomingOrder {
-
-        private Integer secondToOrder;
-        private List<Integer> IDs;
-
-        public UpcomingOrder(Integer secondToOrder, List<Integer> IDs) {
-            this.secondToOrder = secondToOrder;
-            this.IDs = IDs;
-        }
-
-        /**
-         * Returns the time when that order will be activated
-         * @return Time of activation
-         */
-        public Integer getSecondToOrder() {
-            return secondToOrder;
-        }
-
-        /**
-         * Returns the list of items in the order
-         * @return List of times to order
-         */
-        public List<Integer> getItemLists() {
-            return IDs;
-        }
-    }
 }
 
 
