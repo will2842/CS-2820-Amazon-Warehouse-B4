@@ -12,11 +12,11 @@ class Order implements Orders{
 	public String OrderLocation;
 	
 	
-	public void Order(Integer OrderID, HashMap<String, Integer> ItemIDList, String Address, String OrderLocation){
+	public void Order(Integer OrderID, HashMap<Integer, Integer> ItemIDList, String Address){
 		this.OrderID = OrderID;
 		this.ItemIDList = ItemIDList;
 		this.Address = Address;
-		this.OrderLocation = OrderLocation;
+		this.OrderLocation = "Start";
 	}
 	
 	//Not sure what this interface is for...
@@ -53,15 +53,18 @@ class Order implements Orders{
 class OrderingSystem{
 	
 	//Instance variable is a queue. Now thinking about it, may just want a regular list or something
-	public HashMap<Integer, Order> OrderList;
+	public Map<Integer, Order> OngoingOrders;
 	
-	public void OrderingSystem(HashMap<Integer, Order> OrderList){
-		this.OrderList = OrderList;
+	public void OrderingSystem(){
+		this.OngoingOrders = new HashMap<>();
 	}
 	
 	//Lets you add order
-	public void placeOrder(Integer Order, Order newOrder){
-		this.OrderList.put(Order, newOrder);
+	public void placeOrder(Map<Integer,Integer> newItemList, String newAddress){
+		//Add a thing that checks inventory to see if it can be processed 
+		Integer uniqueID = UUID.randomUUID();
+		Order newOrder = new Order(uniqueID, newItemList, newAddress);
+		this.OrderList.put(uniqueID, newOrder);
 	}
 	
 	//Pops first item in queue, assuming all orders are first in first out, but should change cus that is unrealistic
