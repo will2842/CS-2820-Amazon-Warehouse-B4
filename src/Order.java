@@ -50,12 +50,12 @@ class Order implements Orders{
 
 //Makes a list of Orders so we have an overview of all Orders currently being worked on,
 //And also lets you remove completed orders and add new orders
-class MainOrder{
+class OrderingSystem{
 	
 	//Instance variable is a queue. Now thinking about it, may just want a regular list or something
 	public HashMap<Integer, Order> OrderList;
 	
-	public void MainOrder(HashMap<Integer, Order> OrderList){
+	public void OrderingSystem(HashMap<Integer, Order> OrderList){
 		this.OrderList = OrderList;
 	}
 	
