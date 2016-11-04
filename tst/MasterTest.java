@@ -3,4 +3,9 @@
  * Group B4
  */
 public class MasterTest {
+
+    public static void main(String[] args) {
+        Master tempMaster = new Master();
+    }
+
 }
