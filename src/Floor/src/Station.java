@@ -1,9 +1,9 @@
 
 public class Station extends Thing {
-	int w = 1;
-	int l = 1;
-	public void Station(int x, int y){
-		super.thing(x,y,w,l);
+	public static int w = 1;
+	public static int l = 1;
+	public Station(int x, int y){
+		super(x,y,w,l);
 	}
 	public boolean HitMeBro(int x, int y){
 		boolean result = false;

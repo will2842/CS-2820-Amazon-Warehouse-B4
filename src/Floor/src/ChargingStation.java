@@ -1,9 +1,9 @@
 
 public class ChargingStation extends Thing {
-	public int width= 2;
-	public int length=1;
-	public void ChargingStation(int x_loc, int y_loc){
-		super.thing(x_loc,y_loc,this.width,this.length);
+	public static int width= 2;
+	public static int length=1;
+	public ChargingStation(int x_loc, int y_loc){
+		super(x_loc,y_loc,width,length);
 	}
 	public boolean IsCharging(int x,  int y){
 		boolean result = false;

@@ -1,11 +1,11 @@
 
 public class Thing {
-	public int x_loc;
-	public int y_loc;
-	public int width;
-	public int length;
-	public boolean moveable; //some of them may be able to move, others do not
-	public void thing(int x, int y, int w, int h){
+	public static int x_loc;
+	public static int y_loc;
+	public static int width;
+	public static int length;
+	public static boolean moveable; //some of them may be able to move, others do not
+	public Thing(int x, int y, int w, int h){
 		x_loc= x; 
 		y_loc= y ;
 		width= w;
