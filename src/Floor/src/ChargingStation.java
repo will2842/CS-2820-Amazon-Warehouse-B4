@@ -2,7 +2,7 @@
 public class ChargingStation extends Thing {
 	public int width= 2;
 	public int length=1;
-	public void floor(int x_loc, int y_loc){
+	public void ChargingStation(int x_loc, int y_loc){
 		super.thing(x_loc,y_loc,this.width,this.length);
 	}
 	public boolean IsCharging(int x,  int y){
