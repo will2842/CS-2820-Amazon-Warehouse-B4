@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Eduardo on 11/3/16.
@@ -26,23 +28,17 @@ public class Belt implements Observer
 	
 	public void onSite_Pick(int x, int y)
 	{
+		Integer orderID = 0;
 		if(x_loc_pick ==  x && y_loc_pick ==  y)
 		{
-			pack(Integer OrderID);
+			pack(orderID);
 		}
 	}
 	
 	@Override
-    public void update(Observable o, Object arg) 
+    public void update(Observable o, Object arg)
 	{
-        //Initializes the timer
-        if (time == null) 
-        {
-            time = 0;
-        } else 
-        	{
-            	time ++;
-        	}
+
 
 	}
 	
