@@ -1,14 +1,15 @@
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mitziu on 11/3/16.
  */
 public class UpcomingOrder {
     private Integer timeToOrder;
-    private List<Integer> IDs;
+    private Map<Integer, Integer> items;
+    private String address;
 
-    public UpcomingOrder(Integer timeToOrder, List<Integer> IDs) {
-        if (IDs.isEmpty()) {
+    public UpcomingOrder(Integer timeToOrder, Map<Integer, Integer> items, String address) {
+        if (items.isEmpty()) {
             throw new IllegalStateException("Order has to include at least 1 item");
         }
 
@@ -16,8 +17,13 @@ public class UpcomingOrder {
             throw new IllegalStateException("Time to Order has to be greater than or equal to zero");
         }
 
+        if (address == "") {
+            throw new IllegalArgumentException("Address cannot be empty");
+        }
+
         this.timeToOrder = timeToOrder;
-        this.IDs = IDs;
+        this.items = items;
+        this.address = address;
     }
 
     /**
@@ -29,10 +35,14 @@ public class UpcomingOrder {
     }
 
     /**
-     * Returns the list of items in the order
-     * @return List of times to order
+     * Returns the map of items and quantity
+     * @return map of item ID and quantity
      */
-    public List<Integer> getItemLists() {
-        return IDs;
+    public Map<Integer, Integer> getItems() {
+        return items;
+    }
+
+    public String getAddress () {
+        return this.address;
     }
 }

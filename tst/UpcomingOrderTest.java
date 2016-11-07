@@ -3,7 +3,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mitziu on 11/3/16.
@@ -12,36 +14,47 @@ import java.util.List;
 public class UpcomingOrderTest {
 
     UpcomingOrder upcomingOrder;
-    List<Integer> IDs;
+    Map<Integer, Integer> items;
+
+    final private String fakeAddress = "100 Testing Address Iowa City IA";
+    final private Integer ID = 10;
+    final private Integer quantity = 1;
+    final private Integer timeToOrder = 0;
 
     @Before
     public void setup() {
-        IDs = new ArrayList<>();
+        items = new HashMap<>();
     }
 
     @Test
     public void correctParameters() {
-        IDs.add(10);
-        upcomingOrder = new UpcomingOrder(0, IDs);
+        items.put(ID,1);
 
-        Assert.assertTrue(upcomingOrder.getTimeToOrder() == 0);
+        upcomingOrder = new UpcomingOrder(timeToOrder, items, fakeAddress);
 
-        Assert.assertTrue(upcomingOrder.getItemLists().size() == 1);
-        Assert.assertTrue(upcomingOrder.getItemLists().get(0) == 10);
+        Assert.assertTrue(upcomingOrder.getTimeToOrder() == timeToOrder);
+
+        Assert.assertTrue(upcomingOrder.getItems().size() == 1);
+        Assert.assertTrue(upcomingOrder.getItems().get(ID) == quantity);
+
+        Assert.assertTrue(upcomingOrder.getAddress().equals(fakeAddress));
     }
 
     @Test (expected = IllegalStateException.class)
     public void emptyListException() {
-        upcomingOrder = new UpcomingOrder(0, IDs);
-
+        upcomingOrder = new UpcomingOrder(timeToOrder, items, "Testing Address");
     }
 
     @Test (expected = IllegalStateException.class)
     public void negativeTimeException() {
-        IDs.add(10);
-
-        upcomingOrder = new UpcomingOrder(-1, IDs);
+        items.put(ID , quantity);
+        upcomingOrder = new UpcomingOrder(-1, items, "Testing Address");
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void emptyAddressException() {
+        items.put(ID , quantity);
+        upcomingOrder = new UpcomingOrder(timeToOrder, items, "");
+    }
 
 }

@@ -12,7 +12,8 @@ public class MasterTest {
 
     Master master;
     Clock clock;
-    Integer[] expectedTimeToArrive = {0,5,7,8,10,11};
+
+    private final Integer[] expectedTimeToArrive = {0,10,15};
 
     @Before
     public void setup() {

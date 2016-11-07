@@ -1,10 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Queue;
@@ -74,9 +73,7 @@ public class Master implements Observer {
      * @param orderInformation Information per order
      */
     private void loadCurrentOrder(String orderInformation) {
-
         upcomingOrders.add(createOrder(orderInformation));
-
     }
 
     /**
@@ -85,16 +82,34 @@ public class Master implements Observer {
      * @return
      */
     private UpcomingOrder createOrder(String orderInformation) {
-        List<String> stringOrderInfo = new LinkedList<>(Arrays.asList(orderInformation.split(",")));
+        String[] orderInfo = orderInformation.split(",");
 
-        Integer timeToOrder = Integer.valueOf(stringOrderInfo.get(0));
-        stringOrderInfo.remove(0);
+        if ( ! (orderInfo.length >= 4) || (orderInfo.length % 2 != 0) ){
+            throw new IllegalArgumentException("Illegal number of Arguments");
+        }
 
-        List<Integer> IDs = new ArrayList<>();
-        stringOrderInfo.stream()
-                .forEachOrdered(item -> IDs.add(Integer.valueOf(item)));
+        Integer timeToOrder = Integer.valueOf(orderInfo[0]);
+        Map<Integer, Integer> items = buildItemsMap(orderInfo);
+        String address = orderInfo[orderInfo.length - 1];
 
-        return new UpcomingOrder(timeToOrder, IDs);
+        return new UpcomingOrder(timeToOrder, items, address);
+    }
+
+    /**
+     * Builds the map of ID and quantity
+     * @param orderInfo Array of Strings read from the upcomingOrders file
+     * @return Map. ID is key and quantity is the value
+     */
+    private Map<Integer, Integer> buildItemsMap (String[] orderInfo) {
+        Map<Integer, Integer> items = new HashMap<>();
+
+        for (int i = 1; i < orderInfo.length - 2; i += 2) {
+            Integer ID = Integer.valueOf(orderInfo[i]);
+            Integer quantity = Integer.valueOf(orderInfo[i + 1]);
+            items.put(ID, quantity);
+        }
+
+        return items;
     }
 
     /**
@@ -102,9 +117,8 @@ public class Master implements Observer {
      */
     private void checkNewOrders() {
         while (upcomingOrders.peek().getTimeToOrder() == time) {
-            //TODO: Change to Map with address
-            upcomingOrders.poll();
-            //orderSystem.placeOrder(upcomingOrders.poll().getItemLists());
+            UpcomingOrder currentOrder = upcomingOrders.poll();
+            orderSystem.placeOrder(currentOrder.getItems() , currentOrder.getAddress());
         }
     }
 
